@@ -1,31 +1,23 @@
 #include "lexique.hpp"
+#include "utilitaire.hpp"
 #include <iostream>
+#include <string>
 
 int main() {
-    // Nom du fichier texte à analyser - sophia
-    std::string fichier = "/workspaces/tp1-sophia/tp1-Lexique-fichiers-20251006/tp1-Lexique-fichiers/lesMiserables_A.txt";
-    // Nom du fichier texte à analyser - annabelle
-    std::string fichier = "inserer chemin";
+    std::string nomFichier = "lesMiserables_A.txt"; // Nom du fichier à lire
+    Lexique lexique(nomFichier);      // Création d'une instance de Lexique
 
-    // Création de l'objet Lexique
-    Lexique lexique(fichier);
+    lexique.construireDepuisFichier(nomFichier); // Construction du lexique à partir du fichier
 
-    // Construction du lexique à partir du fichier
-    lexique.construireDepuisFichier(fichier);
+    std::cout << "Lexique construit à partir du fichier: " << lexique.getNom() << std::endl;
+    std::cout << "Nombre de mots différents: " << lexique.nombreMotsDifferents() << std::endl;
 
-    // Affichage du contenu complet du lexique (mot : occurrences)
-    std::cout << "=== Contenu du lexique ===" << std::endl;
-    lexique.afficher();
+    lexique.afficher(); // Affichage du contenu du lexique
 
-    // Affichage du nombre de mots différents
-    std::cout << std::endl
-              << "Nombre de mots différents : "
-              << lexique.nombreMotsDifferents() << std::endl;
-
-    // Exemple : chercher le nombre d'occurrences d’un mot spécifique
-    std::string motRecherche = "love";
-    std::cout << "Occurrences du mot \"" << motRecherche << "\" : "
-              << lexique.nombreOccurrences(motRecherche) << std::endl;
+    // Exemple de recherche d'occurrences pour un mot spécifique
+    std::string motRecherche = "exemple"; // Remplacez par le mot que vous voulez rechercher
+    int occurrences = lexique.nombreOccurrences(motRecherche);
+    std::cout << "Le mot '" << motRecherche << "' apparaît " << occurrences << " fois." << std::endl;
 
     return 0;
 }
