@@ -24,6 +24,9 @@ public:
     // Construit le lexique à partir d’un fichier texte
     void construireDepuisFichier(const std::string& nomFichier);
 
+    // Sauvegarde du contenu du lexique dans un fichier de sortie
+    void sauvegarderDansFichier(const std::string& nomFichier) const;
+
     // Affiche le contenu du lexique
     void afficher() const;
 

@@ -19,7 +19,7 @@ const std::map<std::string, int>& Lexique::getLexique() const { return lexique; 
 // Méthodes //
 
 
-// 1- Construit le lexique à partir d’un fichier texte
+// Construit le lexique à partir d’un fichier texte
 void Lexique::construireDepuisFichier(const string& nomFichier) {
     string contenu;
     if (!util::readFileIntoString(nomFichier, contenu)) {
@@ -36,6 +36,21 @@ void Lexique::construireDepuisFichier(const string& nomFichier) {
             lexique[mot]++;
         }
     }
+}
+
+// Sauvegarde du contenu du lexique dans un fichier de sortie
+void Lexique::sauvegarderDansFichier(const std::string& nomFichier) const {
+    ofstream fichier(nomFichier);
+    if (!fichier) {
+        cerr << "Erreur lors de l'ouverture du fichier pour l'écriture: " << nomFichier << endl;
+        return;
+    }
+
+    // Boucle qui parcourt toutes les paires (clé, valeur) de lexique
+    for (const auto& paire : lexique) {
+        fichier << paire.first << ": " << paire.second << endl; // Écrit chaque mot et son occurrence dans le nouveau fichier
+    }
+    fichier.close();
 }
 
 void Lexique::afficher() const
