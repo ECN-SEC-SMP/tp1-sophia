@@ -20,10 +20,33 @@ const std::map<std::string, int>& Lexique::getLexique() const { return lexique; 
 
 // Méthodes //
 
-void Lexique::construireDepuisFichier(const std::string& nomFichier) {
-    string content;
-    void readFileIntoString(std::string_view path, std::string& content);
+void Lexique::construireDepuisFichier(const string& nomFichier) {
+    string contenu;
+    if (!util::readFileIntoString(nomFichier, contenu)) {
+        cout << "Erreur : impossible de lire le fichier " << nomFichier << endl;
+        return;
+    }
+
+    // On récupère une copie modifiable de la chaîne car strtok modifie le buffer
+    char* buffer = contenu.data();  
+
+    // Liste des délimiteurs (espace, ponctuation, retour à la ligne, etc.)
+    const char* delims = " ,.;:!?()[]{}\"\n\r\t";
+
+    // Premier mot
+    char* token = strtok(buffer, delims);
+
+    while (token != nullptr) {
+        string mot(token);       // conversion char* -> std::string
+        util::to_lower(mot);     // mettre en minuscules
+        util::trim_punctuation(mot); // au cas où (nettoyage fin)
+        if (!mot.empty())
+            lexique[mot]++;      // ajout ou incrément
+        // Mot suivant
+        token = strtok(nullptr, delims);
+    }
 }
+
 
 void Lexique::afficher() const
 {
