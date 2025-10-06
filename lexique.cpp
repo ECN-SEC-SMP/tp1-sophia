@@ -9,10 +9,9 @@
 using namespace std;
 // Constructeur //
 
-Lexique::Lexique(const std::string& nomFichier)
-    : nom(nomFichier) {}
+Lexique::Lexique(const std::string& nomFichier) : nom(nomFichier) {}
 
-    
+
 // Getters //
 const std::string& Lexique::getNom() const { return nom; }
 const std::map<std::string, int>& Lexique::getLexique() const { return lexique; }
@@ -50,18 +49,20 @@ void Lexique::construireDepuisFichier(const string& nomFichier) {
 
 void Lexique::afficher() const
 {
+        // Boucle qui parcourt toutes les paires (clé, valeur) de lexique
     for (const auto& paire : lexique) {
-        cout << paire.first << ": " << paire.second << endl;
+        cout << paire.first << ": " << paire.second << endl; // Affiche la clé (mot) et la valeur (occurrence)
     }
 }
 
 int Lexique::nombreMotsDifferents() const
 {
-    return lexique.size();
+    return lexique.size(); // La taille de la map correspond au nombre de mots différents
 }
 
 int Lexique::nombreOccurrences(const std::string& mot) const
 {
+    // On cherche dans la map si le mot existe
     auto it = lexique.find(mot);
     if (it != lexique.end()) {
         return it->second;
