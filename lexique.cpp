@@ -1,6 +1,5 @@
 #include "lexique.hpp"
 #include "utilitaire.hpp"
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -20,7 +19,7 @@ const std::map<std::string, int>& Lexique::getLexique() const { return lexique; 
 // Méthodes //
 
 
-// Construit le lexique à partir d’un fichier texte
+// 1- Construit le lexique à partir d’un fichier texte
 void Lexique::construireDepuisFichier(const string& nomFichier) {
     string contenu;
     if (!util::readFileIntoString(nomFichier, contenu)) {
@@ -38,7 +37,6 @@ void Lexique::construireDepuisFichier(const string& nomFichier) {
         }
     }
 }
-
 
 void Lexique::afficher() const
 {
