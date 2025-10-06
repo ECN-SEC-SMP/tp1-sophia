@@ -15,8 +15,8 @@ public:
     Lexique(const std::string& nomFichier);
 
     // Getters //
-    const std::string& getNom() const { return nom; }
-    const std::map<std::string, int>& getLexique() const { return lexique; }
+    const std::string& getNom() const ;
+    const std::map<std::string, int>& getLexique() const;
 
 
     // Methodes // 
