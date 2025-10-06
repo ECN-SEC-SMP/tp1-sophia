@@ -10,17 +10,27 @@ private:
     std::map<std::string, int> lexique;   // Conteneur clé=mot, valeur=occurrence
 
 public:
-    // Constructeur
-    explicit Lexique(const std::string& nomFichier);
 
+    // Constructeur //
+    Lexique(const std::string& nomFichier);
+
+    // Getters //
+    const std::string& getNom() const { return nom; }
+    const std::map<std::string, int>& getLexique() const { return lexique; }
+
+
+    // Methodes // 
     // Construit le lexique à partir d’un fichier texte
     void construireDepuisFichier(const std::string& nomFichier);
 
     // Affiche le contenu du lexique
-    void afficher() const;
+    void afficher();
 
     // Retourne le nombre de mots différents
-    int nombreMotsDifferents() const;
+    int nombreMotsDifferents();
+
+    // Retourne le nombre d'occurrences d'un mot
+    int nombreOccurrences(const std::string& mot);
 };
 
 #endif
