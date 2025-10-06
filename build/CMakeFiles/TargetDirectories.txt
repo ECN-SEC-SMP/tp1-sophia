@@ -1,0 +1,3 @@
+/workspaces/tp1-sophia/build/CMakeFiles/tp1.dir
+/workspaces/tp1-sophia/build/CMakeFiles/edit_cache.dir
+/workspaces/tp1-sophia/build/CMakeFiles/rebuild_cache.dir
