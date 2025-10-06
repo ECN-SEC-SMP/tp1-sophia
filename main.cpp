@@ -9,13 +9,13 @@ int main() {
 
     lexique.construireDepuisFichier(nomFichier); // Construction du lexique à partir du fichier
 
-    std::cout << "Lexique construit à partir du fichier: " << lexique.getNom() << std::endl;
+    std::cout << "Lexique construit à partir du fichier: " << lexique.getNom() << std::endl; // Affichage du nom du lexique
     std::cout << "Nombre de mots différents: " << lexique.nombreMotsDifferents() << std::endl;
 
     lexique.afficher(); // Affichage du contenu du lexique
 
-    // Exemple de recherche d'occurrences pour un mot spécifique
-    std::string motRecherche = "exemple"; // Remplacez par le mot que vous voulez rechercher
+    // test de recherche d'occurrences pour un mot spécifique
+    std::string motRecherche = "bonjour"; // Remplacez par le mot que vous voulez rechercher
     int occurrences = lexique.nombreOccurrences(motRecherche);
     std::cout << "Le mot '" << motRecherche << "' apparaît " << occurrences << " fois." << std::endl;
 
