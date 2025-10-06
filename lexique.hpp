@@ -20,17 +20,18 @@ public:
 
 
     // Methodes // 
+
     // Construit le lexique à partir d’un fichier texte
     void construireDepuisFichier(const std::string& nomFichier);
 
     // Affiche le contenu du lexique
-    void afficher();
+    void afficher() const;
 
     // Retourne le nombre de mots différents
-    int nombreMotsDifferents();
+    int nombreMotsDifferents() const;
 
     // Retourne le nombre d'occurrences d'un mot
-    int nombreOccurrences(const std::string& mot);
+    int nombreOccurrences(const std::string& mot) const;
 };
 
 #endif
