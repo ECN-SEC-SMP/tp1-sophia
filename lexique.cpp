@@ -20,29 +20,29 @@ const std::map<std::string, int>& Lexique::getLexique() const { return lexique; 
 // Méthodes //
 
 void Lexique::construireDepuisFichier(const string& nomFichier) {
-    string contenu;
-    if (!util::readFileIntoString(nomFichier, contenu)) {
-        cout << "Erreur : impossible de lire le fichier " << nomFichier << endl;
+    ifstream fichier(nomFichier);           // ouverture du fichier
+    if (!fichier) {
+        cerr << "Erreur : impossible d’ouvrir " << nomFichier << endl;
         return;
     }
 
-    // On récupère une copie modifiable de la chaîne car strtok modifie le buffer
-    char* buffer = contenu.data();  
+    string ligne;
+    const char* delims = " ,.;:!?()[]{}\"\n\r\t"; // séparateurs
 
-    // Liste des délimiteurs (espace, ponctuation, retour à la ligne, etc.)
-    const char* delims = " ,.;:!?()[]{}\"\n\r\t";
+    while (getline(fichier, ligne)) {       // lire le fichier ligne par ligne
+        char* buffer = ligne.data();        // buffer modifiable
+        char* mot = strtok(buffer, delims); // premier mot
 
-    // Premier mot
-    char* token = strtok(buffer, delims);
+        while (mot != nullptr) {
+            string s = mot;                 // convertir en string C++
+            for (char& c : s)               // mettre en minuscules
+                c = tolower(c);
 
-    while (token != nullptr) {
-        string mot(token);       // conversion char* -> std::string
-        util::to_lower(mot);     // mettre en minuscules
-        util::trim_punctuation(mot); // au cas où (nettoyage fin)
-        if (!mot.empty())
-            lexique[mot]++;      // ajout ou incrément
-        // Mot suivant
-        token = strtok(nullptr, delims);
+            if (!s.empty())
+                lexique[s]++;               // compter
+
+            mot = strtok(nullptr, delims);  // mot suivant
+        }
     }
 }
 
