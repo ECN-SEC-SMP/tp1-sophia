@@ -20,12 +20,12 @@ const std::map<std::string, int>& Lexique::getLexique() const { return lexique; 
 // Méthodes //
 
 void Lexique::construireDepuisFichier(const string& nomFichier) {
-    ifstream fichier(nomFichier);           // ouverture du fichier
-    if (!fichier) {
-        cerr << "Erreur : impossible d’ouvrir " << nomFichier << endl;
-        return;
-    }
-
+    string contenu;
+        if (!util::readFileIntoString(nomFichier, contenu)) {
+            cerr << "Erreur : impossible de lire le fichier " << nomFichier << endl;
+            return;
+        }
+    
     string ligne;
     const char* delims = " ,.;:!?()[]{}\"\n\r\t"; // séparateurs
 
