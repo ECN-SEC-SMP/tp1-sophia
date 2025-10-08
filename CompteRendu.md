@@ -42,7 +42,7 @@ class Lexique {
         void supprimerMot(const std::string& mot);
 };
 ```
-Voici les fonctions associées les plus importantes :
+Voici les fonctions associées à la classe les plus importantes :
 
 ```C
 // Méthodes //
@@ -117,6 +117,8 @@ On a utilisé le compteneur map car il nous permet d'avoir un système clés val
 
 
 ### Jeu de Test :
+
+Dans notre main on a effectué un test avec le mot étoiles :
 
 ```C
 int main() {
