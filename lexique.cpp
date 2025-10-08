@@ -6,6 +6,7 @@
 #include <map>
 
 using namespace std;
+
 // Constructeur //
 
 Lexique::Lexique(const std::string& nomFichier) : nom(nomFichier) {}
@@ -74,4 +75,9 @@ int Lexique::nombreOccurrences(const std::string& mot) const
         return it->second;
     }
     return 0;
+}
+
+void Lexique::supprimerMot(const std::string& mot)
+{
+    lexique.erase(mot);
 }

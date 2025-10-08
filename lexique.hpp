@@ -35,6 +35,9 @@ public:
 
     // Retourne le nombre d'occurrences d'un mot
     int nombreOccurrences(const std::string& mot) const;
+
+    // Supprime un mot du lexique
+    void supprimerMot(const std::string& mot);
 };
 
 #endif
