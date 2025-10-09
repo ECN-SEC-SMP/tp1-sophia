@@ -12,9 +12,12 @@ using namespace std;
 Lexique::Lexique(const std::string& nomFichier) : nom(nomFichier) {}
 
 
+
 // Getters //
+
 const std::string& Lexique::getNom() const { return nom; }
 const std::map<std::string, int>& Lexique::getLexique() const { return lexique; }
+
 
 
 // Méthodes //
@@ -56,7 +59,7 @@ void Lexique::sauvegarderDansFichier(const std::string& nomFichier) const {
 
 void Lexique::afficher() const
 {
-        // Boucle qui parcourt toutes les paires (clé, valeur) de lexique
+    // Boucle qui parcourt toutes les paires (clé, valeur) de lexique
     for (const auto& paire : lexique) {
         cout << paire.first << ": " << paire.second << endl; // Affiche la clé (mot) et la valeur (occurrence)
     }
@@ -80,4 +83,28 @@ int Lexique::nombreOccurrences(const std::string& mot) const
 void Lexique::supprimerMot(const std::string& mot)
 {
     lexique.erase(mot);
+}
+
+
+
+// Operateurs //
+
+std::ostream& operator<<(std::ostream& out, const Lexique& l)
+{
+    for (const auto& paire : l.getLexique()) {
+        out << paire.first << ": " << paire.second << endl;
+    }
+    return out;
+}
+
+Lexique Lexique::fusionner(const Lexique& a, const Lexique& b)
+{
+    Lexique resultat = a; // copie du lexique a (nom + map)
+
+    // Additionne les occurrences de b dans le lexique a
+    for (const auto& paire : b.getLexique()) {
+        resultat.lexique[paire.first] += paire.second;
+    }
+
+    return resultat;
 }

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <ostream>
 
 class Lexique {
 private:
@@ -38,6 +39,13 @@ public:
 
     // Supprime un mot du lexique
     void supprimerMot(const std::string& mot);
+
+
+    // Fusionne 2 lexiques
+    static Lexique fusionner(const Lexique& a, const Lexique& b);
 };
+
+//Affiche en utilisant l'opérateur <<
+std::ostream& operator<<(std::ostream& out, const Lexique& l);
 
 #endif
