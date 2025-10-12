@@ -1,7 +1,7 @@
 # Compte Rendu TP1 - Lexique
 ###Annabelle & Sophia
 
-Le but de ce TP était de réaliser un lexique à partir d'un texte. Dans ce lexique, on retrouve la liste de tous les mots du texte avec leur nombre d'occurence.
+Le but de ce TP était de réaliser un lexique à partir d'un texte. Dans ce lexique, on retrouve la liste de tous les mots du texte avec leur nombre d'occurence. Nous avons créée des fonctions pour afficher, chercher ou modifier le lexique.
 
 ### Classe Lexique :
 ```C
@@ -40,12 +40,20 @@ class Lexique {
 
        // Supprime un mot du lexique
         void supprimerMot(const std::string& mot);
+
+        // Fusionne 2 lexiques
+        static Lexique fusionner(const Lexique& a, const Lexique& b);
 };
+
+//Affichage avec l'utilisation de l'opérateur <<
+std::ostream& operator<<(std::ostream& out, const Lexique& l);
 ```
+
 Voici les fonctions associées à la classe les plus importantes :
 
 ```C
 // Méthodes //
+
 
 // Construit le lexique à partir d’un fichier texte
 void Lexique::construireDepuisFichier(const string& nomFichier) {
@@ -81,22 +89,19 @@ void Lexique::sauvegarderDansFichier(const std::string& nomFichier) const {
     fichier.close();
 }
 
-
 void Lexique::afficher() const
 {
-        // Boucle qui parcourt toutes les paires (clé, valeur) de lexique
+    // Boucle qui parcourt toutes les paires (clé, valeur) de lexique
     for (const auto& paire : lexique) {
         cout << paire.first << ": " << paire.second << endl; // Affiche la clé (mot) et la valeur (occurrence)
     }
 }
-
 
 int Lexique::nombreMotsDifferents() const
 {
     return lexique.size(); // La taille de la map correspond au nombre de mots différents
 }
 
-// Renvoie le nombre d'occurence d'un mot en particulier
 int Lexique::nombreOccurrences(const std::string& mot) const
 {
     // On cherche dans la map si le mot existe
@@ -111,6 +116,28 @@ void Lexique::supprimerMot(const std::string& mot)
 {
     lexique.erase(mot);
 }
+
+// Operateurs //
+
+std::ostream& operator<<(std::ostream& out, const Lexique& l)
+{
+    for (const auto& paire : l.getLexique()) {
+        out << paire.first << ": " << paire.second << endl;
+    }
+    return out;
+}
+
+Lexique Lexique::fusionner(const Lexique& a, const Lexique& b)
+{
+    Lexique resultat = a; // copie du lexique a (nom + map)
+
+    // Additionne les occurrences de b dans le lexique a
+    for (const auto& paire : b.getLexique()) {
+        resultat.lexique[paire.first] += paire.second;
+    }
+
+    return resultat;
+}
 ```
 
 On a utilisé le compteneur map car il nous permet d'avoir un système clés valeur. Ici on a, clés = mot et valeur = nb occurences.
@@ -118,7 +145,7 @@ On a utilisé le compteneur map car il nous permet d'avoir un système clés val
 
 ### Jeu de Test :
 
-Dans notre main on a effectué un test avec le mot étoiles :
+Dans notre main.cpp, on a effectué un test avec le fichier les Miserables et le mot étoiles :
 
 ```C
 int main() {
@@ -163,20 +190,43 @@ Le mot 'étoiles' apparaît 1 fois.
 Le mot 'étoiles' apparaît 0 fois. Il a été supprimé
 ```
 
+
 ### Surchage d'opérateurs :
 
 Opérateur << pour l'affichage :
 
+```C
+std::ostream& operator<<(std::ostream& out, const Lexique& l)
+{
+    for (const auto& paire : l.getLexique()) {
+        out << paire.first << ": " << paire.second << endl;
+    }
+    return out;
+}
+```
+
 Opérateur += pour la fusion : 
+```C
+Lexique Lexique::fusionner(const Lexique& a, const Lexique& b)
+{
+    Lexique resultat = a; // copie du lexique a (nom + map)
 
+    // Additionne les occurrences de b dans le lexique a
+    for (const auto& paire : b.getLexique()) {
+        resultat.lexique[paire.first] += paire.second;
+    }
 
-### Jeu d'essai 
+    return resultat;
+}
+```
+
+### Jeux d'essai 
 
 Affichage :
 ```C
 int main() {
 
-    //Fichiers à lire
+    //Fichier à lire
     std::string nomFichier_1 = "_lesMiserables_A.txt"; // Nom du fichier à lire
     Lexique lexique_1(nomFichier_1);      // Création d'une instance de Lexique
     lexique_1.construireDepuisFichier(nomFichier_1); // Construction du lexique à partir du fichier
@@ -192,17 +242,21 @@ int main() {
     int occurrences = lexique_1.nombreOccurrences(motRecherche);
     std::cout << "Le mot '" << motRecherche << "' apparaît " << occurrences << " fois." << std::endl;
 
-    // Exemple de suppression d'un mot
-    lexique_1.supprimerMot(motRecherche);
-    int new_occurrences = lexique_1.nombreOccurrences(motRecherche);
-    std::cout << "Le mot '" << motRecherche << "' apparaît " << new_occurrences << " fois. Il a été supprimé" << std::endl;
-
-    
     return 0;
 }
 ```
 Resultat :
-```T
+```
+(..)
+étions: 1
+étoiles: 1
+étonne: 1
+étrange: 1
+être: 2
+ô: 1
+Lexique construit à partir du fichier: _lesMiserables_A.txt
+Nombre de mots différents: 26133
+Le mot 'étoiles' apparaît 1 fois.
 ```
 
 
@@ -219,20 +273,24 @@ int main() {
     Lexique lexique_2(nomFichier_2);
     lexique_2.construireDepuisFichier(nomFichier_2);
 
-
-
-    lexique_1.afficher() ; // Affichage du lexique 1
-
-    std::cout << "Lexique construit à partir du fichier: " << lexique_1.getNom() << std::endl;
-
     // Exemple de fusion de deux lexiques
     Lexique fusionner = Lexique::fusionner(lexique_1, lexique_2);
     fusionner.afficher(); // Affichage du lexique fusionné
-    
+
+    std::cout << "Lexique construit à partir des fichiers: " << lexique_1.getNom() << " et " << lexique_2.getNom() << std::endl;
     
     return 0;
 }
 ```
 Resultat :
-```T
+```
+(...)
+“‘pon: 1
+“‘s: 1
+“‘the: 1
+“‘tis: 79
+“‘to: 1
+“‘twas: 3
+the: 1
+Lexique construit à partir des fichiers: _lesMiserables_A.txt et _notreDameDeParis_A.txt
 ```
